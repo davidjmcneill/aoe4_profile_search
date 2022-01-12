@@ -38,7 +38,7 @@
     
     {#each match.players as player (player.profile_id)}
         <div class='player team{player.team}'>
-            <p><img src="{civ_flag[player.civ]}" alt="{civ_name[player.civ]} Flag" title="{civ_name[player.civ]}"/> <span class="font-bold">{player.name}</span> - <button on:click>{player.profile_id}</button> (ELO: {player.rating})</p>
+            <p><img src="{civ_flag[player.civ]}" alt="{civ_name[player.civ]} Flag" title="{civ_name[player.civ]}"/> <span class="font-bold">{player.name}</span> - <button title="Click to search this profile" on:click={() => {search_id=player.profile_id}}>{player.profile_id}</button> (ELO: {player.rating})</p>
         </div>
     {:else}
         <p>No player data</p>

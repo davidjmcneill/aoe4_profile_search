@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
 
     export let search_id = '';
+    export let fetch_status = '';
     let stats = [];
     let match_type = {17: "1v1", 18: "2v2", 19: "3v3", 20: "4v4"};
 
@@ -17,6 +18,7 @@
             temp_array.push(temp_obj[i]);
         }
         stats = temp_array;
+        fetch_status = '';
         console.log(stats);
     };
     //fetch default data (future: saved session ID?)
@@ -27,33 +29,35 @@
     }
 </script>
 
-<h3>User Stats</h3>
-
 {#if stats.length > 0}
-<h4>Quick Matches</h4>
-<table class="table">
-    <tr>
+<div class="table-responsive">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Match Type</th>
+            <th>ELO Rating</th>
+            <th>Rank</th>
+            <th>Win Rate (%)</th>
+        </tr>
+    </thead>
+    <tbody>
     {#each stats as board (board.leaderboard_id)}
-        <th>{match_type[board.leaderboard_id]}</th>
+        <tr>
+            <th>{match_type[board.leaderboard_id]} QM</th>
+            {#each board.leaderboard as player (player.profile_id)}
+            <td>{player.rating}</td>
+            <td>{player.rank}</td>
+            <td>{CalculatePercent(player.wins,player.games)}% ({player.wins}/{player.games})</td>
+            {:else}
+            <td colspan="100%">No player data</td>
+            {/each}
+        </tr>
     {/each}
-    </tr>
-    <tr>
-    {#each stats as board (board.leaderboard_id)}
-        <td class="player_info">
-
-        {#each board.leaderboard as player (player.profile_id)}
-            <p>Rating: {player.rating}</p>
-            <p>Rank: {player.rank}</p>
-            <p>Win Rate: {CalculatePercent(player.wins,player.games)}% ({player.wins}/{player.games})</p>
-        {:else}
-            <p>No player data</p>
-        {/each}
-        </td>
-    {/each}
-    </tr>
+    </tbody>
 </table>
+</div>
 {:else}
-    <td>No user stats found for {search_id}</td>
+    <p>Loading..</p>
 {/if}
 
 <style>
