@@ -5,6 +5,7 @@
     export let search_box = '';
     export let player_stats = '';
     export let match_info = '';
+    export let player_rating = '';
     let auto_refresh = false;
     let auto_poll;
     let auto_timer;
@@ -16,6 +17,7 @@
             $fetch_status = 'Loading profile data for '+$search_id;
             player_stats.fetch_stats();
             match_info.fetch_matches();
+            player_rating.fetch_rating();
             auto_poll_timer = 120;
         } else {
             search_box.focus();

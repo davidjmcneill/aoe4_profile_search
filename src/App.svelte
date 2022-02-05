@@ -23,7 +23,7 @@
 				<div class="card bg-secondary text-white">
 					<div class="card-body">
 						<h5 class="card-title">Type in a Profile ID</h5>
-						<ProfileSearch bind:player_stats={player_stats} bind:match_info={match_info} bind:search_box={search_box}/>
+						<ProfileSearch bind:player_stats={player_stats} bind:match_info={match_info} bind:player_rating={player_rating} bind:search_box={search_box}/>
 					</div>
 	
 					{#if $fetch_status.length > 0}
